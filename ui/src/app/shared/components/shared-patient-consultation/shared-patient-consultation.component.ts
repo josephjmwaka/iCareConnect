@@ -50,6 +50,7 @@ import { PatientVisitHistoryModalComponent } from "../patient-visit-history-moda
 import { MatDialog } from "@angular/material/dialog";
 import { clearBills } from "src/app/store/actions/bill.actions";
 import { AddDiagnosisModalComponent } from "../add-diagnosis-modal/add-diagnosis-modal.component";
+import { Router } from '@angular/router'
 
 @Component({
   selector: "app-shared-patient-consultation",
@@ -84,7 +85,8 @@ export class SharedPatientConsultationComponent implements OnInit {
     private store: Store<AppState>,
     private billableItemsService: BillableItemsService,
     private visitService: VisitsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -180,6 +182,9 @@ export class SharedPatientConsultationComponent implements OnInit {
     event.stopPropagation();
     this.store.dispatch(clearBills());
     this.store.dispatch(go({ path: ["/clinic/patient-list"] }));
+  }
+  navigateToAllPatients() {
+    this.router.navigate(['/clinic/patient-list'], { fragment: 'all-patients-tab' });
   }
 
   onOpenNewDiagnosisModal(event: Event, patient, diagnosisForm, visit): void {
